@@ -36,7 +36,7 @@ public class Listing {
 
     // Geolocation
     @Column(columnDefinition = "geometry(Point,4326)")
-    private Point location;
+    private Point location; // Not Localization
 
     private int bedrooms;
     private int bathrooms;
