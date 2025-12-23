@@ -105,7 +105,7 @@ public class Listing {
         return location;
     }
 
-    public void setLocalization(Point location) {
+    public void setLocation(Point location) {
         this.location = location;
     }
 
