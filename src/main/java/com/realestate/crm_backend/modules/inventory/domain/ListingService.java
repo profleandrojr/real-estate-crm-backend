@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.realestate.crm_backend.service;
+package com.realestate.crm_backend.modules.inventory.domain;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,9 +26,8 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 
-import com.realestate.crm_backend.dto.ListingDTO;
-import com.realestate.crm_backend.entity.Listing;
-import com.realestate.crm_backend.repository.ListingRepository;
+import com.realestate.crm_backend.modules.inventory.api.ListingDTO;
+import com.realestate.crm_backend.modules.inventory.repository.ListingRepository;
 
 @Service
 public class ListingService {

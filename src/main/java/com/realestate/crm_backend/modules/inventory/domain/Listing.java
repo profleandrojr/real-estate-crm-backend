@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.realestate.crm_backend.entity;
+package com.realestate.crm_backend.modules.inventory.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

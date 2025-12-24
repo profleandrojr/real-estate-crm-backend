@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.realestate.crm_backend.controller;
+package com.realestate.crm_backend.modules.inventory.api;
 
 import java.util.List;
 
@@ -26,8 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.realestate.crm_backend.dto.ListingDTO;
-import com.realestate.crm_backend.service.ListingService;
+import com.realestate.crm_backend.modules.inventory.domain.ListingService;
 
 @RestController
 @RequestMapping("/api/listings")
