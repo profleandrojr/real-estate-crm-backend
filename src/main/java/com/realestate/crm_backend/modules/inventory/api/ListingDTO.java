@@ -1,4 +1,4 @@
-package com.realestate.crm_backend.dto;
+package com.realestate.crm_backend.modules.inventory.api;
 
 import java.math.BigDecimal;
 
