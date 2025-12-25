@@ -10,44 +10,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.realestate.crm_backend.modules.identity.domain.Realtor;
-import com.realestate.crm_backend.modules.identity.domain.RealtorService;
+import com.realestate.crm_backend.modules.identity.domain.Agent;
+import com.realestate.crm_backend.modules.identity.domain.AgentService;
 
 @RestController
-@RequestMapping("/api/realtors")
-public class RealtorController {
+@RequestMapping("/api/agents")
+public class AgentController {
 
-    private final RealtorService service;
+    private final AgentService service;
 
-    public RealtorController(RealtorService service) {
+    public AgentController(AgentService service) {
         this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<RealtorDTO> create(@RequestBody RealtorDTO dto) {
-        Realtor entity = new Realtor();
+    public ResponseEntity<AgentDTO> create(@RequestBody AgentDTO dto) {
+        Agent entity = new Agent();
         entity.setName(dto.name());
         entity.setLicenseNumber(dto.licenseNumber());
         entity.setBaseCommissionRate(dto.baseCommissionRate());
+        entity.setRealtor(dto.isRealtor());
 
-        Realtor saved = service.save(entity);
+        Agent saved = service.save(entity);
         return ResponseEntity.ok(convertToDTO(saved));
     }
 
     @GetMapping
-    public ResponseEntity<List<RealtorDTO>> getAll() {
-        List<RealtorDTO> dtos = service.findAll().stream()
+    public ResponseEntity<List<AgentDTO>> getAll() {
+        List<AgentDTO> dtos = service.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
     }
 
-    private RealtorDTO convertToDTO(Realtor entity) {
-        return new RealtorDTO(
+    private AgentDTO convertToDTO(Agent entity) {
+        return new AgentDTO(
                 entity.getId(),
                 entity.getName(),
                 entity.getLicenseNumber(),
-                entity.getBaseCommissionRate()
+                entity.getBaseCommissionRate(),
+                entity.isRealtor()
         );
     }
 

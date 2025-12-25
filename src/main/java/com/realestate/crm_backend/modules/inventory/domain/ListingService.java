@@ -26,6 +26,7 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 
+import com.realestate.crm_backend.modules.identity.domain.AgentService;
 import com.realestate.crm_backend.modules.inventory.api.ListingDTO;
 import com.realestate.crm_backend.modules.inventory.repository.ListingRepository;
 
@@ -33,13 +34,15 @@ import com.realestate.crm_backend.modules.inventory.repository.ListingRepository
 public class ListingService {
 
     private final ListingRepository repository;
+    private final AgentService agentService;
 
     // Factory to create Geometry points (SRID 4326 = GPS Standard)
     private final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
 
     // Dependency Injection : Best Practice
-    public ListingService(ListingRepository repository) {
+    public ListingService(ListingRepository repository, AgentService agentService) {
         this.repository = repository;
+        this.agentService = agentService;
     }
 
     public List<ListingDTO> findAll() {
@@ -49,7 +52,14 @@ public class ListingService {
     }
 
     public ListingDTO createListing(ListingDTO dto) {
+
+        // Business Rule: Ensure the capturing realtor exists
+        if (dto.listingAgentId() != null && !agentService.exists(dto.listingAgentId())) {
+            throw new RuntimeException("Realtor not found with ID: " + dto.listingAgentId());
+        }
+
         Listing entity = new Listing();
+
         entity.setTitle(dto.title());
         entity.setDescription(dto.description());
         entity.setPrice(dto.price());
@@ -57,6 +67,7 @@ public class ListingService {
         entity.setBedrooms(dto.bedrooms());
         entity.setBathrooms(dto.bathrooms());
         entity.setAreaSquareMeters(dto.areaSquareMeters());
+        entity.setListingAgentId(dto.listingAgentId());
 
         // Handle Geometry Conversion
         if (dto.latitude() != null && dto.longitude() != null) {
@@ -86,6 +97,7 @@ public class ListingService {
                 entity.getBedrooms(),
                 entity.getBathrooms(),
                 entity.getAreaSquareMeters(),
+                entity.getListingAgentId(),
                 lat,
                 lon
         );

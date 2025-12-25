@@ -10,6 +10,7 @@ public record ListingDTO(Long id,
         Integer bedrooms,
         Integer bathrooms,
         Double areaSquareMeters,
+        Long listingAgentId,
         // Simple coordinates for the API
         Double latitude,
         Double longitude) {

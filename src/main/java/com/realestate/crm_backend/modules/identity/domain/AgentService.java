@@ -5,21 +5,21 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.realestate.crm_backend.modules.identity.repository.RealtorRepository;
+import com.realestate.crm_backend.modules.identity.repository.AgentRepository;
 
 import jakarta.transaction.Transactional;
 
 @Service
-public class RealtorService {
+public class AgentService {
 
-    private final RealtorRepository repository;
+    private final AgentRepository repository;
 
-    public RealtorService(RealtorRepository repository) {
+    public AgentService(AgentRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
-    public Realtor save(Realtor realtor) {
+    public Agent save(Agent realtor) {
         // Business Rule: Ensure license numbers are always uppercase
         if (realtor.getLicenseNumber() != null) {
             realtor.setLicenseNumber(realtor.getLicenseNumber().toUpperCase());
@@ -27,16 +27,16 @@ public class RealtorService {
         return repository.save(realtor);
     }
 
-    public List<Realtor> findAll() {
+    public List<Agent> findAll() {
         return repository.findAll();
     }
 
-    public Optional<Realtor> findById(Long id) {
+    public Optional<Agent> findById(Long id) {
         return repository.findById(id);
     }
 
     /**
-     * Validates if a Realtor exists. This is what other modules (Inventory/CRM)
+     * Validates if a Agent exists. This is what other modules (Inventory/CRM)
      * will call.
      */
     public boolean exists(Long id) {

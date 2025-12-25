@@ -10,8 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "realtors")
-public class Realtor {
+@Table(name = "agents")
+public class Agent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,10 @@ public class Realtor {
     @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal baseCommissionRate;
 
+    @Column(nullable = false)
+    private boolean isRealtor = false;
+
+    // --- GETTERS & SETTERS ---
     public long getId() {
         return id;
     }
@@ -56,6 +60,14 @@ public class Realtor {
 
     public void setBaseCommissionRate(BigDecimal baseCommissionRate) {
         this.baseCommissionRate = baseCommissionRate;
+    }
+
+    public boolean isRealtor() {
+        return isRealtor;
+    }
+
+    public void setRealtor(boolean isRealtor) {
+        this.isRealtor = isRealtor;
     }
 
 }
