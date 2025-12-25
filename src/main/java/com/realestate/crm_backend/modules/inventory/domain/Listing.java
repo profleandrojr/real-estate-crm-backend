@@ -77,6 +77,9 @@ public class Listing {
         this.updatedAt = LocalDateTime.now();
     }
 
+    @Column(name = "listing_agent_id")
+    private Long listingAgentId;
+
     // --- GETTERS & SETTERS ---
     public long getId() {
         return id;
@@ -164,6 +167,14 @@ public class Listing {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Long getListingAgentId() {
+        return listingAgentId;
+    }
+
+    public void setListingAgentId(Long listingAgentId) {
+        this.listingAgentId = listingAgentId;
     }
 
 }
