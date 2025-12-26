@@ -2,6 +2,7 @@ package com.realestate.crm_backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -15,11 +16,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Critical for POST requests via Postman
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**").permitAll() // Ensure this covers /api/** 
+                // Use permitAll for Swagger, don't use 'ignore'
+                .requestMatchers(
+                        "/v3/api-docs",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html"
+                ).permitAll()
+                .requestMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
-                );
+                )
+                // Cleanly handles the "Generated Password" issue by allowing basic auth 
+                // but only for the authenticated paths
+                .httpBasic(withDefaults());
+
         return http.build();
     }
 
@@ -34,5 +46,4 @@ public class SecurityConfig {
             }
         };
     }
-
 }
