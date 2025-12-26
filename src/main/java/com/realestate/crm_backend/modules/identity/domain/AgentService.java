@@ -1,10 +1,10 @@
 package com.realestate.crm_backend.modules.identity.domain;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.realestate.crm_backend.config.ResourceNotFoundException;
 import com.realestate.crm_backend.modules.identity.repository.AgentRepository;
 
 import jakarta.transaction.Transactional;
@@ -27,12 +27,18 @@ public class AgentService {
         return repository.save(agent);
     }
 
+    public Agent findById(long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Agent not found with ID: " + id));
+    }
+
     public List<Agent> findAll() {
         return repository.findAll();
     }
 
-    public Optional<Agent> findById(Long id) {
-        return repository.findById(id);
+    public Agent findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Agent not found with ID" + id));
     }
 
     /**

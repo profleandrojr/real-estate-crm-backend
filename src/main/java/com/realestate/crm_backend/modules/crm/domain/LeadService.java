@@ -25,4 +25,10 @@ public class LeadService {
 
         return repository.save(lead);
     }
+
+    public Lead findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Lead not found with ID" + id));
+    }
+
 }

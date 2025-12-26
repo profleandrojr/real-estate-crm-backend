@@ -25,6 +25,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 import com.realestate.crm_backend.modules.identity.domain.AgentService;
 import com.realestate.crm_backend.modules.inventory.api.ListingDTO;
@@ -49,6 +50,12 @@ public class ListingService {
         return repository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public Listing findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceAccessException("Listing not found with ID: " + id));
+
     }
 
     public ListingDTO createListing(ListingDTO dto) {
