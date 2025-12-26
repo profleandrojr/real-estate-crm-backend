@@ -19,11 +19,11 @@ public class Commission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long listingId;
-
-    @Column(nullable = false)
+    @Column(name = "lead_id", nullable = false)
     private Long leadId;
+
+    @Column(name = "listing_id", nullable = false)
+    private Long listingId;
 
     private BigDecimal totalSalePrice;
     private BigDecimal totalCommissionValue;

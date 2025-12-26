@@ -1,6 +1,8 @@
 package com.realestate.crm_backend.modules.commissions.api;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,11 @@ public class CommissionController {
     public ResponseEntity<Commission> process(@RequestBody CommissionRequestDTO dto) {
         Commission result = service.processSale(dto.listingId(), dto.leadId(), dto.salePrice());
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/agent-report/{agentId}")
+    public ResponseEntity<AgentDashboardDTO> getReport(@PathVariable Long agentId) {
+        return ResponseEntity.ok(service.getAgentPerformance(agentId));
     }
 
 }
