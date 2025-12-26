@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "leads")
@@ -22,9 +24,12 @@ public class Lead {
     private String name;
 
     @Column(nullable = false)
+    @Email(message = "Please provide a valid email address")
+    @NotBlank(message = "Email is required")
     private String email;
 
     @Column(nullable = false)
+    @NotBlank(message = "Phone number is required")
     private String phone;
 
     @Column(name = "selling_agent_id")
@@ -42,7 +47,7 @@ public class Lead {
         return id;
     }
 
-    public void setId(Long id) {
+    protected void setId(Long id) {
         this.id = id;
     }
 

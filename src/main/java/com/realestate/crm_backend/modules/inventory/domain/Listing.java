@@ -30,6 +30,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "Listing")
@@ -46,9 +48,11 @@ public class Listing {
     private String description;
 
     @Column(nullable = false)
+    @Positive(message = "Price must be greater than zero")
     private BigDecimal price;
 
     @Column(nullable = false)
+    @NotBlank(message = "Address is required")
     private String address;
 
     // Geolocation
@@ -85,7 +89,7 @@ public class Listing {
         return id;
     }
 
-    public void setId(long id) {
+    protected void setId(long id) {
         this.id = id;
     }
 

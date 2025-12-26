@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.realestate.crm_backend.modules.inventory.domain.ListingService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/listings")
 public class ListingController {
@@ -44,7 +46,7 @@ public class ListingController {
     }
 
     @PostMapping
-    public ResponseEntity<ListingDTO> createListing(@RequestBody ListingDTO dto) {
+    public ResponseEntity<ListingDTO> createListing(@Valid @RequestBody ListingDTO dto) {
         ListingDTO created = service.createListing(dto);
         return ResponseEntity.ok(created);
     }

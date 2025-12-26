@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.realestate.crm_backend.modules.commissions.domain.Commission;
 import com.realestate.crm_backend.modules.commissions.domain.CommissionService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/commissions")
 public class CommissionController {
@@ -22,7 +24,7 @@ public class CommissionController {
     }
 
     @PostMapping("/process")
-    public ResponseEntity<Commission> process(@RequestBody CommissionRequestDTO dto) {
+    public ResponseEntity<Commission> process(@Valid @RequestBody CommissionRequestDTO dto) {
         Commission result = service.processSale(dto.listingId(), dto.leadId(), dto.salePrice());
         return ResponseEntity.ok(result);
     }

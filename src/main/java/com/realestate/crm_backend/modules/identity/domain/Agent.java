@@ -8,6 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "agents")
@@ -18,12 +21,15 @@ public class Agent {
     private long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Name is required")
     private String name;
 
     @Column(nullable = false, unique = true)
     private String licenseNumber;
 
     @Column(nullable = false, precision = 5, scale = 2)
+    @Min(value = 0, message = "Commission rate cannot be negative")
+    @Max(value = 100, message = "Commission rate cannot exceed 100%")
     private BigDecimal baseCommissionRate;
 
     @Column(nullable = false)
@@ -34,7 +40,7 @@ public class Agent {
         return id;
     }
 
-    public void setId(long id) {
+    protected void setId(long id) {
         this.id = id;
     }
 

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.realestate.crm_backend.modules.identity.domain.Agent;
 import com.realestate.crm_backend.modules.identity.domain.AgentService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/agents")
 public class AgentController {
@@ -24,7 +26,7 @@ public class AgentController {
     }
 
     @PostMapping
-    public ResponseEntity<AgentDTO> create(@RequestBody AgentDTO dto) {
+    public ResponseEntity<AgentDTO> create(@Valid @RequestBody AgentDTO dto) {
         Agent entity = new Agent();
         entity.setName(dto.name());
         entity.setLicenseNumber(dto.licenseNumber());
