@@ -15,7 +15,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Critical for POST requests via Postman
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**").permitAll() // Ensure this covers /api/agents
+                .requestMatchers("/api/agents/**", "/api/listings/**", "/api/leads/**").permitAll() // Ensure this covers /api/** 
                 .anyRequest().authenticated()
                 );
         return http.build();
