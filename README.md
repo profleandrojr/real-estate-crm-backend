@@ -81,6 +81,15 @@ Once the server is running, documentation is available via Swagger UI at http://
 
     DataIntegrityViolation: Database constraint breaches.
 
+## 📊 Database Schema
+
+The system uses a shared PostgreSQL database where modules are logically separated but linked via Foreign Keys:
+
+- **Identity**: `agents` table (ID, Name, License, Rate)
+- **Inventory**: `listings` table (ID, Address, Price, AgentID)
+- **CRM**: `leads` table (ID, Name, Email, AgentID)
+- **Commissions**: `commissions` table (ID, LeadID, ListingID, Payouts, OfficeCut)
+
 <div align="center">
   <i>"Non satis est sapiens esse; audendum est."</i>
   <br><br>
