@@ -33,7 +33,7 @@ public class Lead {
     private LocalDateTime createdAt;
 
     @PrePersist
-    private void onCreate() {
+    protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
 

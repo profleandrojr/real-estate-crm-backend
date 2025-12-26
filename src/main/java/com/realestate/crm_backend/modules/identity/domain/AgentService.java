@@ -19,12 +19,12 @@ public class AgentService {
     }
 
     @Transactional
-    public Agent save(Agent realtor) {
+    public Agent save(Agent agent) {
         // Business Rule: Ensure license numbers are always uppercase
-        if (realtor.getLicenseNumber() != null) {
-            realtor.setLicenseNumber(realtor.getLicenseNumber().toUpperCase());
+        if (agent.getLicenseNumber() != null) {
+            agent.setLicenseNumber(agent.getLicenseNumber().toUpperCase());
         }
-        return repository.save(realtor);
+        return repository.save(agent);
     }
 
     public List<Agent> findAll() {

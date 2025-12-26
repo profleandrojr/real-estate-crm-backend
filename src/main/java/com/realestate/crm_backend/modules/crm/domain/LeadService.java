@@ -2,6 +2,7 @@ package com.realestate.crm_backend.modules.crm.domain;
 
 import org.springframework.stereotype.Service;
 
+import com.realestate.crm_backend.config.ResourceNotFoundException;
 import com.realestate.crm_backend.modules.crm.repository.LeadRepository;
 import com.realestate.crm_backend.modules.identity.domain.AgentService;
 
@@ -19,7 +20,7 @@ public class LeadService {
     public Lead createLead(Lead lead) {
 
         if (lead.getSellingAgentId() != null && !agent.exists(lead.getSellingAgentId())) {
-            throw new RuntimeException("Selling agent not found with ID: " + lead.getSellingAgentId());
+            throw new ResourceNotFoundException("Selling agent not found with ID: " + lead.getSellingAgentId());
         }
 
         return repository.save(lead);
