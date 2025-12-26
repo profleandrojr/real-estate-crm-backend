@@ -1,108 +1,88 @@
-# Real Estate CRM - Backend API
+# Real Estate CRM - Modular Monolith Backend
 
-A high-performance, spatial-aware REST API built for modern Real Estate management. This application handles property listings, geolocation data (PostGIS), and lead management pipelines.
+A production-grade Spring Boot application designed to manage real estate operations, agent commissions, and lead tracking using a modular monolithic architecture.
 
-## 🚀 Tech Stack
+# 🏗 Architecture & Modules
 
-- **Language:** Java 21 (LTS)
-- **Framework:** Spring Boot 4.0.1
-- **Database:** PostgreSQL 14+ with **PostGIS** extension
-- **ORM:** Spring Data JPA + Hibernate Spatial
-- **Security:** Spring Security (Stateless/JWT ready)
-- **Build Tool:** Maven
+### The system is divided into logical modules to ensure high cohesion and low coupling:
 
-## 🛠️ Prerequisites
+    - Identity Module: Manages Agent profiles, licensing, and base commission rates.
 
-Before running the application, ensure you have the following installed:
+    - Inventory Module: Handles property listings and links them to listing agents.
 
-- Java 21 SDK
-- PostgreSQL 14 or higher
-- PostGIS extension for PostgreSQL
+    - CRM Module: Tracks buyer leads and assigns them to selling agents.
 
-## ⚙️ Database Setup
+    - Commission Module: The "Handshake" engine that calculates payouts and office cuts across modules.
 
-The application requires a **PostgreSQL** database with the **PostGIS** extension enabled.
+    - Office Module: Manages global brokerage settings and fee structures.
 
-1.  **Create Database:**
+# 🚀 Tech Stack
 
-    ```sql
-    CREATE DATABASE real_estate_crm_db;
-    ```
+    - Java 21 & Spring Boot 4.0.1
 
-2.  **Enable PostGIS (Crucial):**
-    Connect to the specific database and run:
+    - Spring Data JPA: Persistence layer with Hibernate 7.
 
-    ```sql
-    CREATE EXTENSION postgis;
-    ```
+    - PostgreSQL: Primary relational database.
 
-3.  **Configuration:**
-    Update `src/main/resources/application.properties` with your credentials:
-    ```properties
-    spring.datasource.username=your_postgres_user
-    spring.datasource.password=your_postgres_password
-    ```
+    - Hibernate Spatial: Support for geographic and location-based data.
 
-## 🏃‍♂️ How to Run
+    - Jakarta Validation: Robust server-side data integrity.
 
-1.  **Clone the repository:**
+    - Spring Security: Role-based access control (CORS enabled for Frontend).
 
-    ```bash
-    git clone [https://github.com/profleandrojr/real-estate-crm-backend.git](https://github.com/profleandrojr/real-estate-crm-backend.git)
-    cd real-estate-crm-backend
-    ```
+## 🛠 Setup & Installation
 
-2.  **Run with Maven Wrapper:**
-    ```bash
-    ./mvnw spring-boot:run
-    ```
+### Prerequisites
 
-The server will start on `http://localhost:8080`.
+    - JDK 21
 
-## 🔌 API Endpoints (Vertical Slice)
+    - Maven 3+
 
-### Properties (Listings)
+    - PostgreSQL running on localhost:5432
 
-#### 1. Create a Listing
+## Environment Configuration
 
-Note: this listing is fictional, but inspired in the american president Donald Trump (I'm not a fun, but I know how real estate marketing is in NY).
+Update src/main/resources/application.properties with your credentials:
 
-- **URL:** `POST /api/listings`
-- **Headers:** `Content-Type: application/json`
-- **Body:**
-  ```json
-  {
-    "title": "Modern Loft in Manhattan",
-    "description": "Spacious open-concept loft.",
-    "price": 1250000.0,
-    "address": "55 W 46th St, New York, NY",
-    "bedrooms": 1,
-    "bathrooms": 2,
-    "areaSquareMeters": 95.5,
-    "latitude": 40.7562,
-    "longitude": -73.98
-  }
-  ```
+### Properties
 
-#### 2. Get All Listings
+spring.datasource.url=jdbc:postgresql://localhost:5432/real_estate_crm_db
+spring.datasource.username=your_username
+spring.datasource.password=your_password
 
-- **URL:** `GET /api/listings`
-- **Response:** Returns an array of listings with latitude/longitude.
+### Running the App
 
-## 🔒 Security
+Bash
 
-- **Current State:** Dev Mode.
-- **Configuration:** `SecurityConfig.java` permits all traffic to `/api/**` for development.
-- **Future:** Will be upgraded to Stateless JWT Authentication.
+./mvnw clean install
+./mvnw spring-boot:run
 
-## 📂 Project Structure
+## 📡 API Endpoints
 
-```text
-com.realestate.crm_backend
-├── config       # Security & App Configuration
-├── controller   # REST API Layer
-├── dto          # Data Transfer Objects (Java Records)
-├── entity       # Database Models (JPA Entities)
-├── repository   # Data Access Layer
-└── service      # Business Logic & Geospatial Conversion
-```
+### Method Endpoint Description
+
+GET /api/agents Retrieve all registered agents.
+
+POST /api/commissions/process Process a sale and calculate agent/office splits.
+
+GET /api/commissions/agent-report/{id} Get net earnings and deal count for a specific agent.
+
+## API Documentation:
+
+Once the server is running, documentation is available via Swagger UI at http://localhost:8080/swagger-ui/index.html.
+
+🧪 Validation & Error Handling
+
+## The API includes a Global Exception Handler that returns structured JSON for:
+
+    400 Bad Request: Validation failures (e.g., negative commission rates).
+
+    404 Not Found: Missing entities.
+
+    DataIntegrityViolation: Database constraint breaches.
+
+<div align="center">
+  <i>"Non satis est sapiens esse; audendum est."</i>
+  <br><br>
+  <b>CODA EST POESIS</b>
+</div>
