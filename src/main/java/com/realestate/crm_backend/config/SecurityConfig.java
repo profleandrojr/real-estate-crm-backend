@@ -11,25 +11,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(withDefaults()) // Link the CORS config to the filter chain
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                // Use permitAll for Swagger, don't use 'ignore'
-                .requestMatchers(
-                        "/v3/api-docs",
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**",
-                        "/swagger-ui.html"
-                ).permitAll()
+                .requestMatchers(org.springframework.web.cors.CorsUtils::isPreFlightRequest).permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 .requestMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 )
-                // Cleanly handles the "Generated Password" issue by allowing basic auth 
-                // but only for the authenticated paths
                 .httpBasic(withDefaults());
 
         return http.build();
@@ -41,8 +35,10 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:3000", "http://localhost:5173") // React/Vite defaults
-                        .allowedMethods("GET", "POST", "PUT", "DELETE");
+                        .allowedOriginPatterns("http://localhost:3000", "http://localhost:5173")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }
