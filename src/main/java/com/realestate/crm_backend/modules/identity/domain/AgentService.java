@@ -41,6 +41,12 @@ public class AgentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Agent not found with ID" + id));
     }
 
+    public void toggleStatus(Long id) {
+        Agent agent = findById(id);
+        agent.setActive(!agent.isActive());
+        repository.save(agent);
+    }
+
     /**
      * Validates if a Agent exists. This is what other modules (Inventory/CRM)
      * will call.

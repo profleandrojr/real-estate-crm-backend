@@ -8,7 +8,8 @@ public record AgentDTO(
         String lastName,
         String licenseNumber,
         BigDecimal baseCommissionRate,
-        Boolean isRealtor
+        Boolean isRealtor,
+        Boolean isActive
         ) {
 
 }

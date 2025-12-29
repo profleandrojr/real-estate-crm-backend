@@ -50,6 +50,10 @@ public class Agent {
     @Builder.Default
     private boolean isRealtor = false;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean isActive = false;
+
     public String getFullName() {
         return firstName + " " + lastName;
     }
