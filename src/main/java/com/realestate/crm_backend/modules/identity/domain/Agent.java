@@ -11,9 +11,19 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "agents")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Agent {
 
     @Id
@@ -21,8 +31,12 @@ public class Agent {
     private long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Name is required")
-    private String name;
+    @NotBlank(message = "First-name is required")
+    private String firstName;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Last-name is required")
+    private String lastName;
 
     @Column(nullable = false, unique = true)
     private String licenseNumber;
@@ -33,47 +47,11 @@ public class Agent {
     private BigDecimal baseCommissionRate;
 
     @Column(nullable = false)
+    @Builder.Default
     private boolean isRealtor = false;
 
-    // --- GETTERS & SETTERS ---
-    public long getId() {
-        return id;
-    }
-
-    protected void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
-    }
-
-    public BigDecimal getBaseCommissionRate() {
-        return baseCommissionRate;
-    }
-
-    public void setBaseCommissionRate(BigDecimal baseCommissionRate) {
-        this.baseCommissionRate = baseCommissionRate;
-    }
-
-    public boolean isRealtor() {
-        return isRealtor;
-    }
-
-    public void setRealtor(boolean isRealtor) {
-        this.isRealtor = isRealtor;
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
 }

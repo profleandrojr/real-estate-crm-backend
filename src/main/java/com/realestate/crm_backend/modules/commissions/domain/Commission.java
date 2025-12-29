@@ -10,9 +10,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "commissions")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Commission {
 
     @Id
@@ -37,79 +47,6 @@ public class Commission {
     @PrePersist
     protected void onCreate() {
         processedAt = LocalDateTime.now();
-    }
-
-    // --- GETTERS & SETTERS --
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getListingId() {
-        return listingId;
-    }
-
-    public void setListingId(Long listingId) {
-        this.listingId = listingId;
-    }
-
-    public Long getLeadId() {
-        return leadId;
-    }
-
-    public void setLeadId(Long leadId) {
-        this.leadId = leadId;
-    }
-
-    public BigDecimal getTotalSalePrice() {
-        return totalSalePrice;
-    }
-
-    public void setTotalSalePrice(BigDecimal totalSalePrice) {
-        this.totalSalePrice = totalSalePrice;
-    }
-
-    public BigDecimal getTotalCommissionValue() {
-        return totalCommissionValue;
-    }
-
-    public void setTotalCommissionValue(BigDecimal totalCommissionValue) {
-        this.totalCommissionValue = totalCommissionValue;
-    }
-
-    public BigDecimal getListingAgentPayout() {
-        return listingAgentPayout;
-    }
-
-    public void setListingAgentPayout(BigDecimal listingAgentPayout) {
-        this.listingAgentPayout = listingAgentPayout;
-    }
-
-    public BigDecimal getSellingAgentPayout() {
-        return sellingAgentPayout;
-    }
-
-    public void setSellingAgentPayout(BigDecimal sellingAgentPayout) {
-        this.sellingAgentPayout = sellingAgentPayout;
-    }
-
-    public BigDecimal getOfficeCut() {
-        return officeCut;
-    }
-
-    public void setOfficeCut(BigDecimal officeCut) {
-        this.officeCut = officeCut;
-    }
-
-    public LocalDateTime getProcessedAt() {
-        return processedAt;
-    }
-
-    public void setProcessedAt(LocalDateTime processedAt) {
-        this.processedAt = processedAt;
     }
 
 }

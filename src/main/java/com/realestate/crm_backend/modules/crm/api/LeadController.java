@@ -1,6 +1,9 @@
 package com.realestate.crm_backend.modules.crm.api;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,22 +24,31 @@ public class LeadController {
         this.service = service;
     }
 
+    @GetMapping
+    public ResponseEntity<List<LeadDTO>> getAll() {
+        return ResponseEntity.ok(
+                service.findAll().stream().map(this::convertToDTO).toList()
+        );
+    }
+
     @PostMapping
     public ResponseEntity<LeadDTO> create(@Valid @RequestBody LeadDTO dto) {
 
-        Lead lead = new Lead();
-        lead.setName(dto.name());
-        lead.setEmail(dto.email());
-        lead.setPhone(dto.phone());
-        lead.setSellingAgentId(dto.sellingAgentId());
-
+        Lead lead = service.toEntity(dto);
         Lead saved = service.createLead(lead);
-        return ResponseEntity.ok(new LeadDTO(saved.getId(),
-                saved.getName(),
-                saved.getEmail(),
-                saved.getPhone(),
-                saved.getSellingAgentId()
-        ));
+        return ResponseEntity.ok(convertToDTO(saved));
+    }
+
+    private LeadDTO convertToDTO(Lead lead) {
+        return new LeadDTO(
+                lead.getId(),
+                lead.getFirstName(),
+                lead.getLastName(),
+                lead.getEmail(),
+                lead.getPhone(),
+                lead.getAssignedAgentId(),
+                lead.getStatus()
+        );
     }
 
 }

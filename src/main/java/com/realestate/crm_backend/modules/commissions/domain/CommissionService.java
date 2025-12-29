@@ -56,7 +56,7 @@ public class CommissionService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return new AgentDashboardDTO(
-                agent.getName(),
+                agent.getFullName(),
                 (long) commissions.size(),
                 totalEarnings
         );
@@ -67,7 +67,7 @@ public class CommissionService {
         Lead lead = leadService.findById(leadId);
 
         Agent listingAgent = agentService.findById(listing.getListingAgentId());
-        Agent sellingAgent = agentService.findById(lead.getSellingAgentId());
+        Agent sellingAgent = agentService.findById(lead.getAssignedAgentId());
 
         // Get the rule from the Office
         BigDecimal officeRate = officeService.getOfficeCutPercentage()

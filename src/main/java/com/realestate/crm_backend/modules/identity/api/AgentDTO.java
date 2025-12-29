@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 public record AgentDTO(
         Long id,
-        String name,
+        String firstName,
+        String lastName,
         String licenseNumber,
         BigDecimal baseCommissionRate,
         Boolean isRealtor

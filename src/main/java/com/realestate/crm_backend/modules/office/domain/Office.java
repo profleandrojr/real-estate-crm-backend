@@ -8,9 +8,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "office_settings")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Office {
 
     @Id
@@ -21,30 +31,5 @@ public class Office {
 
     @Column(precision = 5, scale = 2)
     private BigDecimal standardOfficeCut;
-
-    // --- GETTERS & SETTERS --- 
-    public Long getId() {
-        return id;
-    }
-
-    protected void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getStandardOfficeCut() {
-        return standardOfficeCut;
-    }
-
-    public void setStandardOfficeCut(BigDecimal standardOfficeCut) {
-        this.standardOfficeCut = standardOfficeCut;
-    }
 
 }

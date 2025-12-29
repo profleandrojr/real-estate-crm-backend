@@ -28,7 +28,8 @@ public class AgentController {
     @PostMapping
     public ResponseEntity<AgentDTO> create(@Valid @RequestBody AgentDTO dto) {
         Agent entity = new Agent();
-        entity.setName(dto.name());
+        entity.setFirstName(dto.firstName());
+        entity.setLastName(dto.lastName());
         entity.setLicenseNumber(dto.licenseNumber());
         entity.setBaseCommissionRate(dto.baseCommissionRate());
         entity.setRealtor(dto.isRealtor());
@@ -48,7 +49,8 @@ public class AgentController {
     private AgentDTO convertToDTO(Agent entity) {
         return new AgentDTO(
                 entity.getId(),
-                entity.getName(),
+                entity.getFirstName(),
+                entity.getLastName(),
                 entity.getLicenseNumber(),
                 entity.getBaseCommissionRate(),
                 entity.isRealtor()

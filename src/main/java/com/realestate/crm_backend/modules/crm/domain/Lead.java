@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,9 +13,19 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "leads")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Lead {
 
     @Id
@@ -21,7 +33,12 @@ public class Lead {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    @NotBlank(message = "First-name is required")
+    private String firstName;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Last-name is required")
+    private String lastName;
 
     @Column(nullable = false)
     @Email(message = "Please provide a valid email address")
@@ -32,62 +49,17 @@ public class Lead {
     @NotBlank(message = "Phone number is required")
     private String phone;
 
-    @Column(name = "selling_agent_id")
-    private Long sellingAgentId; // Link to the Agent module
+    @Column(name = "assigned_agent_id")
+    private Long assignedAgentId;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private LeadStatus status = LeadStatus.NEW;
 
     private LocalDateTime createdAt;
 
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
-    }
-
-    // --- GETTERS & SETTERS ---
-    public Long getId() {
-        return id;
-    }
-
-    protected void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Long getSellingAgentId() {
-        return sellingAgentId;
-    }
-
-    public void setSellingAgentId(Long sellingAgentId) {
-        this.sellingAgentId = sellingAgentId;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 }
