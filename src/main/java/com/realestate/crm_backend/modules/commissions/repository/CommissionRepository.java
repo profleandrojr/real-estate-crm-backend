@@ -13,8 +13,7 @@ public interface CommissionRepository extends JpaRepository<Commission, Long> {
     @Query("SELECT c FROM Commission c "
             + "JOIN Listing l ON c.listingId = l.id "
             + "JOIN Lead ld ON c.leadId = ld.id "
-            + "WHERE l.listingAgentId = :agentId OR ld.sellingAgentId = :agentId")
-
+            + "WHERE l.listingAgentId = :agentId OR ld.assignedAgentId = :agentId")
     List<Commission> findAllByAgentId(@Param("agentId") Long agentId);
 
 }
